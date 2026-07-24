@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Plano UF 1 con Todos los Controles y Resaltado Neón</title>
+  <title>Plano UF 1 Trelew - V1 y V2</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
@@ -351,11 +351,11 @@
 
   <header>
     <div class="brand-title">
-      ⚡ Plano UF 1 Trelew - Dominio y Zonas
+      ⚡ Plano UF 1 Trelew (V1 Esquina en Bloques vs V2 Casa en L)
     </div>
     
     <div class="version-selector">
-      <button class="version-tab active" id="tab-v1" onclick="switchVersion('v1')">Versión 1 (Bloques)</button>
+      <button class="version-tab active" id="tab-v1" onclick="switchVersion('v1')">Versión 1 (Bloques Esquina)</button>
       <button class="version-tab" id="tab-v2" onclick="switchVersion('v2')">Versión 2 (Casa en L + Choricín)</button>
     </div>
   </header>
@@ -381,8 +381,10 @@
 
         <div id="detail-controls-v1" style="display: flex; gap: 6px; flex-wrap: wrap;">
           <button class="btn-detail active" id="dbtn-v1-all" onclick="highlightDetail('v1-all')">👁️ Ver Todo</button>
-          <button class="btn-detail" id="dbtn-v1-uf1" onclick="highlightDetail('v1-uf1')">🟦 UF 1 (54,61%)</button>
-          <button class="btn-detail" id="dbtn-v1-uf2" onclick="highlightDetail('v1-uf2')">🟧 UF 2 / Comunes (45,39%)</button>
+          <button class="btn-detail" id="dbtn-v1-house" onclick="highlightDetail('v1-house')">🏠 Propiedad Esquina (148 m²)</button>
+          <button class="btn-detail" id="dbtn-v1-patio" onclick="highlightDetail('v1-patio')">🌿 Patio Principal (~120 m²)</button>
+          <button class="btn-detail" id="dbtn-v1-fondo" onclick="highlightDetail('v1-fondo')">🚪 Terreno Fondo (~66 m²)</button>
+          <button class="btn-detail" id="dbtn-v1-dptos" onclick="highlightDetail('v1-dptos')">🟧 Dptos Rawson (45,39%)</button>
         </div>
 
         <div id="detail-controls-v2" style="display: none; gap: 6px; flex-wrap: wrap;">
@@ -401,8 +403,11 @@
               <path d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(0, 210, 255, 0.05)" stroke-width="1"/>
             </pattern>
 
-            <pattern id="hatch-v2-roof" width="16" height="16" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
-              <line x1="0" y1="0" x2="0" y2="16" stroke="rgba(0, 210, 255, 0.5)" stroke-width="2"/>
+            <pattern id="hatch-house-v1" width="14" height="14" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+              <line x1="0" y1="0" x2="0" y2="14" stroke="rgba(0, 210, 255, 0.4)" stroke-width="2"/>
+            </pattern>
+            <pattern id="hatch-dptos-v1" width="14" height="14" patternTransform="rotate(-45 0 0)" patternUnits="userSpaceOnUse">
+              <line x1="0" y1="0" x2="0" y2="14" stroke="rgba(255, 109, 0, 0.4)" stroke-width="2"/>
             </pattern>
           </defs>
 
@@ -418,21 +423,51 @@
 
           <!-- VERSION 1 SVG -->
           <g id="svg-v1">
-            <g class="zone" id="v1-uf2-zone" onmousemove="showTooltip(event, 'UF 2 / Sectores Comunes', 'Porcentual de Dominio: 45,39% (279,01 m²).')" onmouseout="hideTooltip()">
-              <rect x="160" y="40" width="580" height="200" fill="rgba(255, 109, 0, 0.35)" stroke="#ff6d00" stroke-width="4" rx="6"/>
-              <rect x="350" y="70" width="200" height="36" fill="#ff6d00" rx="8"/>
-              <text x="450" y="94" fill="#000" font-family="JetBrains Mono" font-size="15" font-weight="900" text-anchor="middle">DOMINIO: 45,39%</text>
-              <text x="450" y="145" fill="#ffffff" font-family="Outfit" font-size="18" font-weight="800" text-anchor="middle">UF 2 / SECTORES COMUNES (279,01 m²)</text>
+            <g class="zone" id="v1-dptos-zone" onmousemove="showTooltip(event, 'Departamentos Linderos (UF 2)', 'Dominio: 45,39% (279,01 m²).<br>Edificación de 2 plantas sobre Av. Rawson.')" onmouseout="hideTooltip()">
+              <rect x="160" y="30" width="380" height="170" fill="url(#hatch-dptos-v1)" stroke="#ff6d00" stroke-width="3.5" rx="4"/>
+              <rect x="160" y="30" width="380" height="170" fill="rgba(255, 109, 0, 0.25)"/>
+              <rect x="170" y="42" width="160" height="24" fill="#ff6d00" rx="4"/>
+              <text x="250" y="59" fill="#000" font-family="JetBrains Mono" font-size="11" font-weight="900" text-anchor="middle">UF 2: 45,39%</text>
+              <text x="350" y="105" fill="#ff9100" font-family="Outfit" font-size="16" font-weight="800" text-anchor="middle">DEPARTAMENTOS LINDEROS</text>
+              <text x="350" y="128" fill="#ffd180" font-family="Outfit" font-size="12" text-anchor="middle">(Edificación de 2 plantas en Av. Rawson)</text>
+              <text x="350" y="148" fill="#ffffff" font-family="JetBrains Mono" font-size="12" font-weight="700" text-anchor="middle">279,01 m² Comunes</text>
             </g>
 
-            <g class="zone" id="v1-uf1-zone" onmousemove="showTooltip(event, 'Unidad Funcional 1', 'Porcentual de Dominio: 54,61% (335,69 m²).')" onmouseout="hideTooltip()">
-              <rect x="160" y="240" width="580" height="290" fill="rgba(0, 210, 255, 0.35)" stroke="#00d2ff" stroke-width="4" rx="6"/>
-              <rect x="410" y="522" width="80" height="16" fill="#00e676" rx="3"/>
-              <text x="450" y="534" fill="#000" font-family="Outfit" font-size="10" font-weight="800" text-anchor="middle">ENTRADA 147</text>
-              <rect x="350" y="270" width="200" height="36" fill="#00d2ff" rx="8"/>
-              <text x="450" y="294" fill="#000" font-family="JetBrains Mono" font-size="15" font-weight="900" text-anchor="middle">DOMINIO: 54,61%</text>
-              <text x="450" y="345" fill="#ffffff" font-family="Outfit" font-size="20" font-weight="900" text-anchor="middle">UNIDAD FUNCIONAL 1 (335,69 m²)</text>
+            <g class="zone" id="v1-fondo-zone" onmousemove="showTooltip(event, 'Terreno Trasero Post-Portón', 'Superficie aprox: ~66,77 m².<br>Parte del 54,61% de UF 1.')" onmouseout="hideTooltip()">
+              <rect x="540" y="30" width="220" height="170" fill="rgba(192, 132, 252, 0.25)" stroke="#c084fc" stroke-width="3" rx="4"/>
+              <text x="650" y="95" fill="#f3e8ff" font-family="Outfit" font-size="15" font-weight="800" text-anchor="middle">TERRENO TRASERO</text>
+              <text x="650" y="120" fill="#e9d5ff" font-family="JetBrains Mono" font-size="14" font-weight="700" text-anchor="middle">~66,77 m²</text>
+              <text x="650" y="142" fill="#d8b4fe" font-family="Outfit" font-size="11" text-anchor="middle">(Post-Portón)</text>
             </g>
+
+            <g id="v1-porton-zone">
+              <line x1="160" y1="200" x2="760" y2="200" stroke="#ffea00" stroke-width="5" stroke-dasharray="8,4"/>
+              <rect x="410" y="188" width="140" height="24" fill="#ffea00" rx="4"/>
+              <text x="480" y="204" fill="#000" font-family="Outfit" font-size="11" font-weight="900" text-anchor="middle">🚪 PORTÓN INTERNO</text>
+            </g>
+
+            <g class="zone" id="v1-patio-zone" onmousemove="showTooltip(event, 'Patio Principal Verde', 'Superficie aprox: ~120 m² descubiertos.<br>Parte del 54,61% de UF 1.')" onmouseout="hideTooltip()">
+              <rect x="160" y="200" width="600" height="120" fill="rgba(0, 230, 118, 0.15)" stroke="#00e676" stroke-width="2.5" stroke-dasharray="4,4"/>
+              <circle cx="270" cy="260" r="18" fill="rgba(0, 230, 118, 0.3)" stroke="#00e676"/>
+              <circle cx="670" cy="245" r="22" fill="rgba(0, 230, 118, 0.3)" stroke="#00e676"/>
+              <text x="460" y="255" fill="#00e676" font-family="Outfit" font-size="17" font-weight="800" text-anchor="middle">PATIO PRINCIPAL (VERDE)</text>
+              <text x="460" y="280" fill="#a7f3d0" font-family="JetBrains Mono" font-size="14" font-weight="700" text-anchor="middle">~120,00 m² Descubiertos</text>
+            </g>
+
+            <g class="zone" id="v1-house-zone" onmousemove="showTooltip(event, 'Propiedad en la Esquina (UF 1)', '148,22 m² Cubiertos en Planta Baja.<br>Vista a Av. Rawson y Entrada Pellegrini 147.')" onmouseout="hideTooltip()">
+              <rect x="160" y="320" width="600" height="210" fill="url(#hatch-house-v1)" stroke="#00d2ff" stroke-width="4" rx="3"/>
+              <rect x="160" y="320" width="600" height="210" fill="rgba(0, 210, 255, 0.2)"/>
+              <rect x="410" y="522" width="100" height="16" fill="#00e676" rx="3"/>
+              <text x="460" y="534" fill="#000" font-family="Outfit" font-size="10" font-weight="800" text-anchor="middle">PUERTA 147</text>
+              <rect x="153" y="350" width="14" height="45" fill="#00d2ff" rx="2"/>
+              <rect x="153" y="430" width="14" height="45" fill="#00d2ff" rx="2"/>
+              <text x="460" y="400" fill="#ffffff" font-family="Outfit" font-size="20" font-weight="900" text-anchor="middle">PROPIEDAD EN LA ESQUINA (UF 1)</text>
+              <text x="460" y="428" fill="#00d2ff" font-family="JetBrains Mono" font-size="17" font-weight="800" text-anchor="middle">148,22 m² CUBIERTOS (Planta Baja)</text>
+              <text x="460" y="452" fill="rgba(255,255,255,0.75)" font-family="Outfit" font-size="13" text-anchor="middle">Vista a Av. Rawson y Entrada Pellegrini 147</text>
+            </g>
+
+            <line x1="160" y1="548" x2="760" y2="548" stroke="#00d2ff" stroke-width="1.5"/>
+            <text x="460" y="568" fill="#00d2ff" font-family="JetBrains Mono" font-size="13" font-weight="800" text-anchor="middle">FRENTE PELLEGRINI: 10,00 m</text>
           </g>
 
           <!-- VERSION 2 SVG -->
@@ -447,9 +482,7 @@
 
             <g class="zone" id="v2-house-zone" onmousemove="showTooltip(event, 'Casa Edificada en L (148,22 m²)', 'Parte cubierta de la UF 1 (54,61%).')" onmouseout="hideTooltip()">
               <path d="M 160 530 L 540 530 L 540 370 L 340 370 L 340 210 L 160 210 Z" 
-                    fill="url(#hatch-v2-roof)" stroke="#00d2ff" stroke-width="4"/>
-              <path d="M 160 530 L 540 530 L 540 370 L 340 370 L 340 210 L 160 210 Z" 
-                    fill="rgba(0, 210, 255, 0.25)"/>
+                    fill="rgba(0, 210, 255, 0.3)" stroke="#00d2ff" stroke-width="4"/>
               <rect x="360" y="522" width="70" height="16" fill="#00e676" rx="3"/>
               <text x="395" y="534" fill="#000" font-family="Outfit" font-size="10" font-weight="800" text-anchor="middle">ENTRADA 147</text>
               <text x="350" y="470" fill="#ffffff" font-family="Outfit" font-size="18" font-weight="800" text-anchor="middle">CASA CUBIERTA EN "L"</text>
@@ -575,9 +608,11 @@
       document.getElementById('btn-neon-uf1').classList.remove('active');
       document.getElementById('btn-neon-uf2').classList.remove('active');
 
-      const uf1V1 = document.getElementById('v1-uf1-zone');
-      const uf2V1 = document.getElementById('v1-uf2-zone');
-      
+      const houseV1 = document.getElementById('v1-house-zone');
+      const patioV1 = document.getElementById('v1-patio-zone');
+      const fondoV1 = document.getElementById('v1-fondo-zone');
+      const dptosV1 = document.getElementById('v1-dptos-zone');
+
       const houseV2 = document.getElementById('v2-house-zone');
       const chorizinV2 = document.getElementById('v2-chorizin-zone');
       const fondoV2 = document.getElementById('v2-fondo-zone');
@@ -586,8 +621,10 @@
       if (uf === 'uf1') {
         document.getElementById('btn-neon-uf1').classList.add('active');
         if (currentVersion === 'v1') {
-          uf1V1.style.opacity = '1';
-          uf2V1.style.opacity = '0.15';
+          houseV1.style.opacity = '1';
+          patioV1.style.opacity = '1';
+          fondoV1.style.opacity = '1';
+          dptosV1.style.opacity = '0.15';
         } else {
           houseV2.style.opacity = '1';
           chorizinV2.style.opacity = '1';
@@ -597,8 +634,10 @@
       } else if (uf === 'uf2') {
         document.getElementById('btn-neon-uf2').classList.add('active');
         if (currentVersion === 'v1') {
-          uf1V1.style.opacity = '0.15';
-          uf2V1.style.opacity = '1';
+          houseV1.style.opacity = '0.15';
+          patioV1.style.opacity = '0.15';
+          fondoV1.style.opacity = '0.15';
+          dptosV1.style.opacity = '1';
         } else {
           houseV2.style.opacity = '0.15';
           chorizinV2.style.opacity = '0.15';
@@ -607,13 +646,9 @@
         }
       } else {
         if (currentVersion === 'v1') {
-          uf1V1.style.opacity = '1';
-          uf2V1.style.opacity = '1';
+          houseV1.style.opacity = '1'; patioV1.style.opacity = '1'; fondoV1.style.opacity = '1'; dptosV1.style.opacity = '1';
         } else {
-          houseV2.style.opacity = '1';
-          chorizinV2.style.opacity = '1';
-          fondoV2.style.opacity = '1';
-          dptosV2.style.opacity = '1';
+          houseV2.style.opacity = '1'; chorizinV2.style.opacity = '1'; fondoV2.style.opacity = '1'; dptosV2.style.opacity = '1';
         }
       }
     }
@@ -624,17 +659,21 @@
       if(activeBtn) activeBtn.classList.add('active');
 
       if (detailId.startsWith('v1-')) {
-        const uf1V1 = document.getElementById('v1-uf1-zone');
-        const uf2V1 = document.getElementById('v1-uf2-zone');
+        const house = document.getElementById('v1-house-zone');
+        const patio = document.getElementById('v1-patio-zone');
+        const fondo = document.getElementById('v1-fondo-zone');
+        const dptos = document.getElementById('v1-dptos-zone');
+
         if (detailId === 'v1-all') {
-          uf1V1.style.opacity = '1';
-          uf2V1.style.opacity = '1';
-        } else if (detailId === 'v1-uf1') {
-          uf1V1.style.opacity = '1';
-          uf2V1.style.opacity = '0.15';
-        } else {
-          uf1V1.style.opacity = '0.15';
-          uf2V1.style.opacity = '1';
+          house.style.opacity = '1'; patio.style.opacity = '1'; fondo.style.opacity = '1'; dptos.style.opacity = '1';
+        } else if (detailId === 'v1-house') {
+          house.style.opacity = '1'; patio.style.opacity = '0.15'; fondo.style.opacity = '0.15'; dptos.style.opacity = '0.15';
+        } else if (detailId === 'v1-patio') {
+          house.style.opacity = '0.15'; patio.style.opacity = '1'; fondo.style.opacity = '0.15'; dptos.style.opacity = '0.15';
+        } else if (detailId === 'v1-fondo') {
+          house.style.opacity = '0.15'; patio.style.opacity = '0.15'; fondo.style.opacity = '1'; dptos.style.opacity = '0.15';
+        } else if (detailId === 'v1-dptos') {
+          house.style.opacity = '0.15'; patio.style.opacity = '0.15'; fondo.style.opacity = '0.15'; dptos.style.opacity = '1';
         }
       } else if (detailId.startsWith('v2-')) {
         const house = document.getElementById('v2-house-zone');
