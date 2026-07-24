@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plano UF 1 con Todos los Controles y Resaltado Neón</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #050810;
+      --panel-bg: rgba(12, 18, 32, 0.95);
+      --neon-blue: #00d2ff;
+      --neon-orange: #ff6d00;
+      --neon-green: #00e676;
+      --neon-purple: #c084fc;
+      --neon-yellow: #ffea00;
+      --text-main: #ffffff;
+      --text-muted: #94a3b8;
+      --border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    header {
+      padding: 16px 30px;
+      background: var(--panel-bg);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
+    }
+
+    .brand-title {
+      font-size: 1.35rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #00d2ff, #ff6d00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .version-selector {
+      display: flex;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 5px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      gap: 6px;
+    }
+
+    .version-tab {
+      padding: 9px 22px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 0.92rem;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      transition: all 0.25s ease;
+    }
+
+    .version-tab.active {
+      background: linear-gradient(135deg, #00d2ff, #0077ff);
+      color: #000;
+      box-shadow: 0 0 18px rgba(0, 210, 255, 0.6);
+    }
+
+    .main-container {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 25px;
+      padding: 25px;
+      flex: 1;
+      max-width: 1750px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    @media (max-width: 1200px) {
+      .main-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .canvas-card {
+      background: var(--panel-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .neon-bar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-neon {
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 2px solid transparent;
+    }
+
+    .btn-uf1 {
+      background: rgba(0, 210, 255, 0.15);
+      border-color: var(--neon-blue);
+      color: #00d2ff;
+      box-shadow: 0 0 12px rgba(0, 210, 255, 0.3);
+    }
+
+    .btn-uf1:hover, .btn-uf1.active {
+      background: var(--neon-blue);
+      color: #000;
+      box-shadow: 0 0 22px rgba(0, 210, 255, 0.8);
+    }
+
+    .btn-uf2 {
+      background: rgba(255, 109, 0, 0.15);
+      border-color: var(--neon-orange);
+      color: #ff6d00;
+      box-shadow: 0 0 12px rgba(255, 109, 0, 0.3);
+    }
+
+    .btn-uf2:hover, .btn-uf2.active {
+      background: var(--neon-orange);
+      color: #000;
+      box-shadow: 0 0 22px rgba(255, 109, 0, 0.8);
+    }
+
+    .btn-reset {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+
+    .btn-reset:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .detail-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-detail {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 7px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-detail:hover, .btn-detail.active {
+      background: rgba(0, 210, 255, 0.22);
+      border-color: var(--neon-blue);
+      color: #fff;
+      box-shadow: 0 0 12px rgba(0, 210, 255, 0.4);
+    }
+
+    .svg-wrapper {
+      width: 100%;
+      height: 630px;
+      background: #020409;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .zone {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .info-card {
+      background: var(--panel-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .info-card h3 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+      color: var(--neon-blue);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 10px;
+    }
+
+    .data-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 9px 0;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+      font-size: 0.9rem;
+    }
+
+    .data-row:last-child {
+      border-bottom: none;
+    }
+
+    .data-label {
+      color: var(--text-muted);
+    }
+
+    .data-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .percentage-card {
+      background: rgba(8, 12, 22, 0.95);
+      border: 2px solid var(--border-color);
+      border-radius: 18px;
+      padding: 20px;
+    }
+
+    .bar-wrapper {
+      height: 30px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      overflow: hidden;
+      display: flex;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      margin: 15px 0;
+    }
+
+    .bar-uf1 {
+      width: 54.61%;
+      background: linear-gradient(90deg, #00d2ff, #0088ff);
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 900;
+      color: #000;
+    }
+
+    .bar-uf2 {
+      width: 45.39%;
+      background: linear-gradient(90deg, #ff6d00, #ff9100);
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 900;
+      color: #000;
+    }
+
+    .legend-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .legend-item {
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+    }
+
+    .legend-item.uf1 {
+      background: rgba(0, 210, 255, 0.15);
+      border: 2px solid var(--neon-blue);
+      color: #a5f3fc;
+    }
+
+    .legend-item.uf2 {
+      background: rgba(255, 109, 0, 0.15);
+      border: 2px solid var(--neon-orange);
+      color: #ffcc80;
+    }
+
+    .tooltip {
+      position: absolute;
+      background: rgba(6, 9, 16, 0.96);
+      border: 2px solid var(--neon-blue);
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      pointer-events: none;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.8);
+      display: none;
+      z-index: 100;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand-title">
+      ⚡ Plano UF 1 Trelew - Dominio y Zonas
+    </div>
+    
+    <div class="version-selector">
+      <button class="version-tab active" id="tab-v1" onclick="switchVersion('v1')">Versión 1 (Bloques)</button>
+      <button class="version-tab" id="tab-v2" onclick="switchVersion('v2')">Versión 2 (Casa en L + Choricín)</button>
+    </div>
+  </header>
+
+  <div class="main-container">
+    
+    <div class="canvas-card">
+      
+      <div class="neon-bar">
+        <button class="btn-neon btn-uf1 active" id="btn-neon-uf1" onclick="highlightUF('uf1')">
+          🟦 VER UF 1 (54,61% - AZUL NEÓN)
+        </button>
+        <button class="btn-neon btn-uf2" id="btn-neon-uf2" onclick="highlightUF('uf2')">
+          🟧 VER UF 2 / COMUNES (45,39% - NARANJA NEÓN)
+        </button>
+        <button class="btn-neon btn-reset" onclick="highlightUF('both')">
+          👁️ VER AMBOS PORCENTAJES
+        </button>
+      </div>
+
+      <div class="detail-bar">
+        <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); display: flex; align-items: center; margin-right: 5px;">🔍 Detalle por Zona:</span>
+
+        <div id="detail-controls-v1" style="display: flex; gap: 6px; flex-wrap: wrap;">
+          <button class="btn-detail active" id="dbtn-v1-all" onclick="highlightDetail('v1-all')">👁️ Ver Todo</button>
+          <button class="btn-detail" id="dbtn-v1-uf1" onclick="highlightDetail('v1-uf1')">🟦 UF 1 (54,61%)</button>
+          <button class="btn-detail" id="dbtn-v1-uf2" onclick="highlightDetail('v1-uf2')">🟧 UF 2 / Comunes (45,39%)</button>
+        </div>
+
+        <div id="detail-controls-v2" style="display: none; gap: 6px; flex-wrap: wrap;">
+          <button class="btn-detail active" id="dbtn-v2-all" onclick="highlightDetail('v2-all')">👁️ Ver Todo</button>
+          <button class="btn-detail" id="dbtn-v2-house" onclick="highlightDetail('v2-house')">🏠 Casa en L (148 m²)</button>
+          <button class="btn-detail" id="dbtn-v2-chorizin" onclick="highlightDetail('v2-chorizin')">🌿 Patio Choricín (~120 m²)</button>
+          <button class="btn-detail" id="dbtn-v2-fondo" onclick="highlightDetail('v2-fondo')">🚪 Terreno Fondo (~66 m²)</button>
+          <button class="btn-detail" id="dbtn-v2-dptos" onclick="highlightDetail('v2-dptos')">🏢 Dptos. Av. Rawson</button>
+        </div>
+      </div>
+
+      <div class="svg-wrapper">
+        <svg viewBox="0 0 1000 660" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+              <path d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(0, 210, 255, 0.05)" stroke-width="1"/>
+            </pattern>
+
+            <pattern id="hatch-v2-roof" width="16" height="16" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+              <line x1="0" y1="0" x2="0" y2="16" stroke="rgba(0, 210, 255, 0.5)" stroke-width="2"/>
+            </pattern>
+          </defs>
+
+          <rect width="1000" height="660" fill="url(#grid)" />
+
+          <!-- AVENIDA RAWSON -->
+          <rect x="0" y="0" width="160" height="660" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)"/>
+          <text x="80" y="330" fill="rgba(255,255,255,0.35)" font-family="Outfit" font-size="20" font-weight="800" transform="rotate(-90 80 330)" text-anchor="middle" letter-spacing="5">AVENIDA RAWSON</text>
+
+          <!-- CALLE CARLOS PELLEGRINI -->
+          <rect x="0" y="530" width="1000" height="130" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)"/>
+          <text x="580" y="595" fill="rgba(255,255,255,0.35)" font-family="Outfit" font-size="20" font-weight="800" text-anchor="middle" letter-spacing="5">CALLE CARLOS PELLEGRINI</text>
+
+          <!-- VERSION 1 SVG -->
+          <g id="svg-v1">
+            <g class="zone" id="v1-uf2-zone" onmousemove="showTooltip(event, 'UF 2 / Sectores Comunes', 'Porcentual de Dominio: 45,39% (279,01 m²).')" onmouseout="hideTooltip()">
+              <rect x="160" y="40" width="580" height="200" fill="rgba(255, 109, 0, 0.35)" stroke="#ff6d00" stroke-width="4" rx="6"/>
+              <rect x="350" y="70" width="200" height="36" fill="#ff6d00" rx="8"/>
+              <text x="450" y="94" fill="#000" font-family="JetBrains Mono" font-size="15" font-weight="900" text-anchor="middle">DOMINIO: 45,39%</text>
+              <text x="450" y="145" fill="#ffffff" font-family="Outfit" font-size="18" font-weight="800" text-anchor="middle">UF 2 / SECTORES COMUNES (279,01 m²)</text>
+            </g>
+
+            <g class="zone" id="v1-uf1-zone" onmousemove="showTooltip(event, 'Unidad Funcional 1', 'Porcentual de Dominio: 54,61% (335,69 m²).')" onmouseout="hideTooltip()">
+              <rect x="160" y="240" width="580" height="290" fill="rgba(0, 210, 255, 0.35)" stroke="#00d2ff" stroke-width="4" rx="6"/>
+              <rect x="410" y="522" width="80" height="16" fill="#00e676" rx="3"/>
+              <text x="450" y="534" fill="#000" font-family="Outfit" font-size="10" font-weight="800" text-anchor="middle">ENTRADA 147</text>
+              <rect x="350" y="270" width="200" height="36" fill="#00d2ff" rx="8"/>
+              <text x="450" y="294" fill="#000" font-family="JetBrains Mono" font-size="15" font-weight="900" text-anchor="middle">DOMINIO: 54,61%</text>
+              <text x="450" y="345" fill="#ffffff" font-family="Outfit" font-size="20" font-weight="900" text-anchor="middle">UNIDAD FUNCIONAL 1 (335,69 m²)</text>
+            </g>
+          </g>
+
+          <!-- VERSION 2 SVG -->
+          <g id="svg-v2" style="display: none;">
+            <g class="zone" id="v2-dptos-zone" onmousemove="showTooltip(event, 'Dptos Av. Rawson (45,39%)', '279,01 m² pertenecientes a la UF 2 (Dptos Av. Rawson).')" onmouseout="hideTooltip()">
+              <rect x="160" y="30" width="160" height="180" fill="rgba(255, 109, 0, 0.35)" stroke="#ff6d00" stroke-width="4" rx="6"/>
+              <rect x="170" y="45" width="140" height="26" fill="#ff6d00" rx="6"/>
+              <text x="240" y="62" fill="#000" font-family="JetBrains Mono" font-size="11" font-weight="900" text-anchor="middle">UF 2: 45,39%</text>
+              <text x="240" y="115" fill="#ffffff" font-family="Outfit" font-size="14" font-weight="800" text-anchor="middle">DPTOS RAWSON</text>
+              <text x="240" y="135" fill="#ffcc80" font-family="JetBrains Mono" font-size="12" font-weight="700" text-anchor="middle">279,01 m²</text>
+            </g>
+
+            <g class="zone" id="v2-house-zone" onmousemove="showTooltip(event, 'Casa Edificada en L (148,22 m²)', 'Parte cubierta de la UF 1 (54,61%).')" onmouseout="hideTooltip()">
+              <path d="M 160 530 L 540 530 L 540 370 L 340 370 L 340 210 L 160 210 Z" 
+                    fill="url(#hatch-v2-roof)" stroke="#00d2ff" stroke-width="4"/>
+              <path d="M 160 530 L 540 530 L 540 370 L 340 370 L 340 210 L 160 210 Z" 
+                    fill="rgba(0, 210, 255, 0.25)"/>
+              <rect x="360" y="522" width="70" height="16" fill="#00e676" rx="3"/>
+              <text x="395" y="534" fill="#000" font-family="Outfit" font-size="10" font-weight="800" text-anchor="middle">ENTRADA 147</text>
+              <text x="350" y="470" fill="#ffffff" font-family="Outfit" font-size="18" font-weight="800" text-anchor="middle">CASA CUBIERTA EN "L"</text>
+              <text x="350" y="495" fill="#00d2ff" font-family="JetBrains Mono" font-size="15" font-weight="700" text-anchor="middle">148,22 m² (Planta Baja)</text>
+            </g>
+
+            <g class="zone" id="v2-chorizin-zone" onmousemove="showTooltip(event, 'Patio Choricín (~120 m²)', 'Corredor libre que bordea la casa.')" onmouseout="hideTooltip()">
+              <path d="M 540 530 L 740 530 L 740 210 L 340 210 L 340 370 L 540 370 Z" 
+                    fill="rgba(0, 230, 118, 0.2)" stroke="#00e676" stroke-width="3" stroke-dasharray="5,5"/>
+              <text x="640" y="420" fill="#00e676" font-family="Outfit" font-size="16" font-weight="800" text-anchor="middle">PATIO CHORICÍN</text>
+              <text x="640" y="445" fill="#a7f3d0" font-family="JetBrains Mono" font-size="13" font-weight="700" text-anchor="middle">~120,00 m² Descubiertos</text>
+            </g>
+
+            <g id="v2-porton-zone">
+              <line x1="340" y1="210" x2="740" y2="210" stroke="#ffea00" stroke-width="5"/>
+              <rect x="470" y="197" width="140" height="26" fill="#ffea00" rx="5"/>
+              <text x="540" y="214" fill="#000" font-family="Outfit" font-size="11" font-weight="900" text-anchor="middle">🚪 PORTÓN DEL CHORICÍN</text>
+            </g>
+
+            <g class="zone" id="v2-fondo-zone" onmousemove="showTooltip(event, 'Terreno Trasero Post-Portón', '~66,77 m² incluidos en la UF 1.')" onmouseout="hideTooltip()">
+              <rect x="340" y="30" width="400" height="180" fill="rgba(192, 132, 252, 0.25)" stroke="#c084fc" stroke-width="3"/>
+              <text x="540" y="110" fill="#f3e8ff" font-family="Outfit" font-size="16" font-weight="800" text-anchor="middle">TERRENO POST-PORTÓN</text>
+              <text x="540" y="135" fill="#e9d5ff" font-family="JetBrains Mono" font-size="13" font-weight="700" text-anchor="middle">~66,77 m² (Post-Portón)</text>
+            </g>
+
+            <rect x="440" y="290" width="220" height="40" fill="#00d2ff" rx="8"/>
+            <text x="550" y="316" fill="#000" font-family="JetBrains Mono" font-size="16" font-weight="900" text-anchor="middle">UF 1 TOTAL: 54,61%</text>
+          </g>
+        </svg>
+
+        <div class="tooltip" id="tooltip"></div>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="percentage-card">
+        <h3 style="color: var(--neon-blue); margin-bottom: 10px;">📊 Porcentual de Dominio</h3>
+        <div style="font-family: 'JetBrains Mono'; font-size: 0.9rem; margin-bottom: 10px;">Superficie Total Parcela 6: <strong>614,70 m²</strong></div>
+
+        <div class="bar-wrapper">
+          <div class="bar-uf1">54,61% UF 1</div>
+          <div class="bar-uf2">45,39% UF 2</div>
+        </div>
+
+        <div class="legend-box">
+          <div class="legend-item uf1">
+            <strong>🟦 UF 1 (Azul Neón)</strong><br>
+            <span style="font-size: 1.1rem; font-weight: 800;">54,61 %</span><br>
+            (335,69 m²)
+          </div>
+          <div class="legend-item uf2">
+            <strong>🟧 UF 2 (Naranja Neón)</strong><br>
+            <span style="font-size: 1.1rem; font-weight: 800;">45,39 %</span><br>
+            (279,01 m²)
+          </div>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <h3>📋 Datos del Título</h3>
+        <div class="data-row">
+          <span class="data-label">Unidad Funcional:</span>
+          <span class="data-val" style="color: var(--neon-blue);">UF 1 (Polígono 00-01)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Dominio Exclusivo:</span>
+          <span class="data-val" style="color: var(--neon-blue);">54,61 % (335,69 m²)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Restante Parcela 6:</span>
+          <span class="data-val" style="color: var(--neon-orange);">45,39 % (279,01 m²)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Entrada:</span>
+          <span class="data-val">Pellegrini 147</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Partida Inmobiliaria:</span>
+          <span class="data-val">12562-1</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const tooltip = document.getElementById('tooltip');
+    let currentVersion = 'v1';
+
+    function showTooltip(e, title, desc) {
+      tooltip.style.display = 'block';
+      tooltip.innerHTML = `<strong>${title}</strong><br><span style="color: #cbd5e1; font-size: 0.8rem;">${desc}</span>`;
+      tooltip.style.left = (e.clientX + 15) + 'px';
+      tooltip.style.top = (e.clientY + 15) + 'px';
+    }
+
+    function hideTooltip() {
+      tooltip.style.display = 'none';
+    }
+
+    function switchVersion(version) {
+      currentVersion = version;
+      document.getElementById('tab-v1').classList.remove('active');
+      document.getElementById('tab-v2').classList.remove('active');
+      document.getElementById('svg-v1').style.display = 'none';
+      document.getElementById('svg-v2').style.display = 'none';
+      document.getElementById('detail-controls-v1').style.display = 'none';
+      document.getElementById('detail-controls-v2').style.display = 'none';
+
+      if (version === 'v1') {
+        document.getElementById('tab-v1').classList.add('active');
+        document.getElementById('svg-v1').style.display = 'block';
+        document.getElementById('detail-controls-v1').style.display = 'flex';
+      } else {
+        document.getElementById('tab-v2').classList.add('active');
+        document.getElementById('svg-v2').style.display = 'block';
+        document.getElementById('detail-controls-v2').style.display = 'flex';
+      }
+      highlightUF('both');
+    }
+
+    function highlightUF(uf) {
+      document.getElementById('btn-neon-uf1').classList.remove('active');
+      document.getElementById('btn-neon-uf2').classList.remove('active');
+
+      const uf1V1 = document.getElementById('v1-uf1-zone');
+      const uf2V1 = document.getElementById('v1-uf2-zone');
+      
+      const houseV2 = document.getElementById('v2-house-zone');
+      const chorizinV2 = document.getElementById('v2-chorizin-zone');
+      const fondoV2 = document.getElementById('v2-fondo-zone');
+      const dptosV2 = document.getElementById('v2-dptos-zone');
+
+      if (uf === 'uf1') {
+        document.getElementById('btn-neon-uf1').classList.add('active');
+        if (currentVersion === 'v1') {
+          uf1V1.style.opacity = '1';
+          uf2V1.style.opacity = '0.15';
+        } else {
+          houseV2.style.opacity = '1';
+          chorizinV2.style.opacity = '1';
+          fondoV2.style.opacity = '1';
+          dptosV2.style.opacity = '0.15';
+        }
+      } else if (uf === 'uf2') {
+        document.getElementById('btn-neon-uf2').classList.add('active');
+        if (currentVersion === 'v1') {
+          uf1V1.style.opacity = '0.15';
+          uf2V1.style.opacity = '1';
+        } else {
+          houseV2.style.opacity = '0.15';
+          chorizinV2.style.opacity = '0.15';
+          fondoV2.style.opacity = '0.15';
+          dptosV2.style.opacity = '1';
+        }
+      } else {
+        if (currentVersion === 'v1') {
+          uf1V1.style.opacity = '1';
+          uf2V1.style.opacity = '1';
+        } else {
+          houseV2.style.opacity = '1';
+          chorizinV2.style.opacity = '1';
+          fondoV2.style.opacity = '1';
+          dptosV2.style.opacity = '1';
+        }
+      }
+    }
+
+    function highlightDetail(detailId) {
+      document.querySelectorAll('.btn-detail').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById('dbtn-' + detailId);
+      if(activeBtn) activeBtn.classList.add('active');
+
+      if (detailId.startsWith('v1-')) {
+        const uf1V1 = document.getElementById('v1-uf1-zone');
+        const uf2V1 = document.getElementById('v1-uf2-zone');
+        if (detailId === 'v1-all') {
+          uf1V1.style.opacity = '1';
+          uf2V1.style.opacity = '1';
+        } else if (detailId === 'v1-uf1') {
+          uf1V1.style.opacity = '1';
+          uf2V1.style.opacity = '0.15';
+        } else {
+          uf1V1.style.opacity = '0.15';
+          uf2V1.style.opacity = '1';
+        }
+      } else if (detailId.startsWith('v2-')) {
+        const house = document.getElementById('v2-house-zone');
+        const chorizin = document.getElementById('v2-chorizin-zone');
+        const fondo = document.getElementById('v2-fondo-zone');
+        const dptos = document.getElementById('v2-dptos-zone');
+
+        if (detailId === 'v2-all') {
+          house.style.opacity = '1'; chorizin.style.opacity = '1'; fondo.style.opacity = '1'; dptos.style.opacity = '1';
+        } else if (detailId === 'v2-house') {
+          house.style.opacity = '1'; chorizin.style.opacity = '0.15'; fondo.style.opacity = '0.15'; dptos.style.opacity = '0.15';
+        } else if (detailId === 'v2-chorizin') {
+          house.style.opacity = '0.15'; chorizin.style.opacity = '1'; fondo.style.opacity = '0.15'; dptos.style.opacity = '0.15';
+        } else if (detailId === 'v2-fondo') {
+          house.style.opacity = '0.15'; chorizin.style.opacity = '0.15'; fondo.style.opacity = '1'; dptos.style.opacity = '0.15';
+        } else if (detailId === 'v2-dptos') {
+          house.style.opacity = '0.15'; chorizin.style.opacity = '0.15'; fondo.style.opacity = '0.15'; dptos.style.opacity = '1';
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>
